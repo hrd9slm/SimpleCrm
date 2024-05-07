@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model client {
+  id_client     Int         @id @default(autoincrement())
+  id_entreprise Int?
+  nom           String      @db.VarChar(255)
+  prenom        String?     @db.VarChar(255)
+  adresse       String?     @db.VarChar(255)
+  ville         String?     @db.VarChar(255)
+  telephone     String?     @db.VarChar(20)
+  email         String?     @db.VarChar(255)
+  entreprise    entreprise? @relation(fields: [id_entreprise], references: [id_entreprise], onDelete: Restrict, onUpdate: Restrict, map: "client_ibfk_1")
+  facture       facture[]
+
+  @@index([id_entreprise], map: "id_entreprise")
+}
+
+model entreprise {
+  id_entreprise      Int           @id @default(autoincrement())
+  nom                String        @db.VarChar(255)
+  siege_social       String?       @db.VarChar(255)
+  date_creation      DateTime?     @db.Date
+  identifiant_fiscal String?       @db.VarChar(255)
+  capital            Decimal?      @db.Decimal(15, 2)
+  nombre_employes    Int?
+  ville              String?       @db.VarChar(255)
+  responsable        String?       @db.VarChar(255)
+  telephone          String?       @db.VarChar(20)
+  email              String?       @db.VarChar(255)
+  client             client[]
+  facture            facture[]
+  fournisseur        fournisseur[]
+}
+
+model facture {
+  id_facture      Int               @id @default(autoincrement())
+  id_client       Int?
+  date_facture    DateTime?         @db.Date
+  montant_total   Decimal?          @db.Decimal(15, 2)
+  id_entreprise   Int?
+  client          client?           @relation(fields: [id_client], references: [id_client], onDelete: Restrict, onUpdate: Restrict, map: "facture_ibfk_1")
+  entreprise      entreprise?       @relation(fields: [id_entreprise], references: [id_entreprise], onDelete: Restrict, onUpdate: Restrict, map: "fk_entreprise_facture")
+  produit_facture produit_facture[]
+
+  @@index([id_entreprise], map: "fk_entreprise_facture")
+  @@index([id_client], map: "id_client")
+}
+
+model fournisseur {
+  id_fournisseur      Int                   @id @default(autoincrement())
+  id_entreprise       Int?
+  nom                 String                @db.VarChar(255)
+  adresse             String?               @db.VarChar(255)
+  ville               String?               @db.VarChar(255)
+  telephone           String?               @db.VarChar(20)
+  email               String?               @db.VarChar(255)
+  entreprise          entreprise?           @relation(fields: [id_entreprise], references: [id_entreprise], onDelete: Restrict, onUpdate: Restrict, map: "fournisseur_ibfk_1")
+  reapprovisionnement reapprovisionnement[]
+
+  @@index([id_entreprise], map: "id_entreprise")
+}
+
+model produit {
+  id_produit          Int                   @id @default(autoincrement())
+  nom                 String                @db.VarChar(255)
+  prix_achat          Decimal?              @db.Decimal(15, 2)
+  prix_vente          Decimal?              @db.Decimal(15, 2)
+  taux_marge          Decimal?              @db.Decimal(5, 2)
+  dimension           String?               @db.VarChar(255)
+  taille              String?               @db.VarChar(255)
+  produit_facture     produit_facture[]
+  reapprovisionnement reapprovisionnement[]
+}
+
+model produit_facture {
+  id_produit_facture Int      @id @default(autoincrement())
+  id_facture         Int?
+  id_produit         Int?
+  quantite           Int?
+  prix_unitaire      Decimal? @db.Decimal(15, 2)
+  facture            facture? @relation(fields: [id_facture], references: [id_facture], onDelete: Restrict, onUpdate: Restrict, map: "produit_facture_ibfk_1")
+  produit            produit? @relation(fields: [id_produit], references: [id_produit], onDelete: Restrict, onUpdate: Restrict, map: "produit_facture_ibfk_2")
+
+  @@index([id_facture], map: "id_facture")
+  @@index([id_produit], map: "id_produit")
+}
+
+model reapprovisionnement {
+  id_reappro     Int          @id @default(autoincrement())
+  id_fournisseur Int?
+  id_produit     Int?
+  quantite       Int?
+  date_reappro   DateTime?    @db.Date
+  fournisseur    fournisseur? @relation(fields: [id_fournisseur], references: [id_fournisseur], onDelete: Restrict, onUpdate: Restrict, map: "reapprovisionnement_ibfk_1")
+  produit        produit?     @relation(fields: [id_produit], references: [id_produit], onDelete: Restrict, onUpdate: Restrict, map: "reapprovisionnement_ibfk_2")
+
+  @@index([id_fournisseur], map: "id_fournisseur")
+  @@index([id_produit], map: "id_produit")
+}
