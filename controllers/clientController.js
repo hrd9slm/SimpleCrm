@@ -5,12 +5,12 @@ const prisma = new PrismaClient();
 const Joi = require('joi');
 
 const clientController = {
-  // Afficher tous les clients
+  // afficher tous les clients
   getAllClients: async (req, res) => {
     try {
       const clients = await prisma.client.findMany({
         include: {
-          facture: true // Inclure les factures de chaque client
+          facture: true 
         }
       });
       res.json(clients);
@@ -19,7 +19,7 @@ const clientController = {
     }
   },
 
-  // Afficher un client par son ID
+  // afficher un client par id
   getClientById: async (req, res) => {
     const { id } = req.params;
     try {
@@ -40,7 +40,7 @@ const clientController = {
     }
   },
 
-  // Créer un nouveau client
+  // creer un  client
   createClient: async (req, res) => {
 
      const { nom, prenom, adresse, ville, telephone, email, id_entreprise } = req.body;
@@ -95,7 +95,7 @@ const clientController = {
      }
   },
 
-  // Mettre à jour un client
+  // modiifier un client
   updateClient: async (req, res) => {
     const { id } = req.params;
     const { nom, prenom, adresse, ville, telephone, email, id_entreprise } = req.body;

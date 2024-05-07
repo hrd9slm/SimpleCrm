@@ -84,7 +84,7 @@ const entrepriseController = {
     }
   },
 
-  // mettre a jour une entreprise
+  // modifier entreprise
   updateEntreprise: async (req, res) => {
     const { id } = req.params;
     const {

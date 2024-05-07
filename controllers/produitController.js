@@ -12,7 +12,7 @@ const produitController = {
         });
         res.json(produits);
       } catch (error) {
-        res.status(500).json({ error: "Une erreur est survenue lors de la récupération des produits." });
+        res.status(500).json({ error: "Une erreur au affichage des produits." });
       }
     },
     
@@ -48,7 +48,7 @@ const produitController = {
         });
         res.json(newProduit);
       } catch (error) {
-        res.status(500).json({ error: "Une erreur est survenue lors de la création du produit." });
+        res.status(500).json({ error: "Une erreur ai creation du produit." });
       }
     },
   
@@ -71,7 +71,7 @@ const produitController = {
         });
         res.json(updatedProduit);
       } catch (error) {
-        res.status(500).json({ error: "Une erreur est survenue lors de la mise à jour du produit." });
+        res.status(500).json({ error: "Une erreur au modification du produit." });
       }
     },
   
@@ -85,7 +85,7 @@ const produitController = {
         });
         res.json({ message: "Produit supprimé avec succès." });
       } catch (error) {
-        res.status(500).json({ error: "Une erreur est survenue lors de la suppression du produit." });
+        res.status(500).json({ error: "Une erreur a la suppression du produit." });
       }
     },
   };

@@ -7,7 +7,7 @@ const fournisseurController = {
     try {
       const fournisseurs = await prisma.fournisseur.findMany({
         include: {
-          reapprovisionnement: true // Inclure les reapprovisionnements
+          reapprovisionnement: true 
         }
       });
       res.json(fournisseurs);
@@ -24,12 +24,12 @@ const fournisseurController = {
           id_fournisseur: parseInt(id),
         },
         include: {
-          reapprovisionnement: true // Inclure les reapprovisionnements
+          reapprovisionnement: true 
         }
       });
       res.json(fournisseur);
     } catch (error) {
-      res.status(500).json({ error: "Une erreur est survenue lors de la récupération du fournisseur." });
+      res.status(500).json({ error: "Une erreur a l affichage du fournisseur." });
     }
   },
 
@@ -48,7 +48,7 @@ const fournisseurController = {
       });
       res.json(newFournisseur);
     } catch (error) {
-      res.status(500).json({ error: "Une erreur est survenue lors de la création du fournisseur." });
+      res.status(500).json({ error: "Une erreur a la creation du fournisseur." });
     }
   },
 
@@ -71,7 +71,7 @@ const fournisseurController = {
       });
       res.json(updatedFournisseur);
     } catch (error) {
-      res.status(500).json({ error: "Une erreur est survenue lors de la mise à jour du fournisseur." });
+      res.status(500).json({ error: "Une erreur a la modification du fournisseur." });
     }
   },
 
@@ -85,7 +85,7 @@ const fournisseurController = {
       });
       res.json({ message: "Fournisseur supprimé avec succès." });
     } catch (error) {
-      res.status(500).json({ error: "Une erreur est survenue lors de la suppression du fournisseur." });
+      res.status(500).json({ error: "Une erreur a la suppression du fournisseur." });
     }
   },
 };
