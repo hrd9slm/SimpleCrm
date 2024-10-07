@@ -8,11 +8,9 @@ const clientController = require('../controllers/clientController');
 
 
 // Routes pour les clients
- router.get('/clients', clientController.getAllClients);
- router.get('/clients/:id', clientController.getClientById);
- router.post('/clients', clientController.createClient);
- router.put('/clients/:id', clientController.updateClient);
- router.delete('/clients/:id', clientController.deleteClient);
+ router.route('/clients').get( clientController.getAllClients).post(clientController.createClient);
+ router.route('/clients/:id').get(clientController.getClientById).put( clientController.updateClient).delete(clientController.deleteClient);
+
 
 //  Routes pour les entreprises
 router.get('/entreprises', entrepriseController.getAllEntreprises);
@@ -46,6 +44,7 @@ router.delete('/entreprises/:id', entrepriseController.deleteEntreprise);
  router.post('/factures', factureController.createFacture);
  router.put('/factures/:id', factureController.updateFacture);
  router.delete('/factures/:id', factureController.deleteFacture);
+ router.get('/factures/nombre/:id', factureController.getNbrFatureByclien);
 
 
 

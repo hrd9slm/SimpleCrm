@@ -76,7 +76,7 @@ const clientController = {
                 
        const {error}=schema.validate(req.body);
        if(error){
-        return res.status(400).json(error);
+        return res.status(400).json(error.details[0].message);
        }
        const newClient = await prisma.client.create({
          data: {
@@ -101,10 +101,10 @@ const clientController = {
     const { nom, prenom, adresse, ville, telephone, email, id_entreprise } = req.body;
     try {
         const schema = Joi.object({
-            nom: Joi.string().trim()
+            nom: Joi.string().required().trim()
                 .min(3)
                 .max(30)
-                .required(),
+                ,
             prenom: Joi.string().trim()
                 .min(3)
                 .max(30)

@@ -84,6 +84,25 @@ const factureController = {
        res.status(500).json({ error: "une erreur a  la suppression de la facture." });
      }
   },
+
+  getNbrFatureByclien: async (req,res)=>{
+
+    const {id} = req.params;
+    try{
+    const nbrFacture=await prisma.facture.aggregate({
+      _count:true,
+      where:{
+        id_client:parseInt(id)
+      }
+
+    });
+    res.json(nbrFacture);
+  }catch(error){
+    res.json({error:"une erreur au nbre des factures"})
+  }}
+
+
 };
+
 
 module.exports = factureController;
